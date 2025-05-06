@@ -1,12 +1,15 @@
 from flask import Flask, request, jsonify
 import requests
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
 # 설정값
 AGENT_ID = "asst_UCRnBi1k1NHN9gL9oUxfi8X"
 API_URL = f"https://westus.api.azureml.ms/agents/asst_UCRnBi1k1NHN9gL9oUxfi8X/chat"
-API_KEY = "🔑 YOUR_FOUNDY_API_KEY"  # 안전하게 보관 필요
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 
 @app.route("/api/messages", methods=["POST"])
 def handle_message():
