@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # 설정값
 AGENT_ID = "asst_UCRnBi1k1NHN9gL9oUxfi8X"
-API_URL = f"https://westus.api.azureml.ms/agents/{AGENT_ID}/chat"
+API_URL = f"https://westus.api.azureml.ms/agents/asst_UCRnBi1k1NHN9gL9oUxfi8X/chat"
 API_KEY = "🔑 YOUR_FOUNDY_API_KEY"  # 안전하게 보관 필요
 
 @app.route("/api/messages", methods=["POST"])
