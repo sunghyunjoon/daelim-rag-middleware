@@ -19,7 +19,7 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://sampleappaoaichatgpt.azurecr.io/
+        registry: https://daelimregistry.azurecr.io/
         username: ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}
         password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }}
 
@@ -27,7 +27,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: sampleappaoaichatgpt.azurecr.io/sample:latest
+        tags: daelimregistry.azurecr.io/sample:latest
         file: ./Dockerfile
 
   deploy:
