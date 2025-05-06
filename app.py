@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
-import requests
+import requests, os
 
 app = Flask(__name__)
 
 API_URL = "https://daelim-chat-openai-westus.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview"
-API_KEY = "7UG4Kmizh8aWGzPfrI4cJLt40U9kpo8oHXg6FVQeICA0Kw3Z2ppPJQQJ99BEAC4f1cMXJ3w3AAABACOGdZoM"
+API_KEY = os.getenv("AZURE_OPENAI_API_KEY")  # 환경변수에서 불러옴
+
+@app.route("/", methods=["GET"])
+def health_check():
+    return "Daelim-RAG-Chatbot is running."
 
 @app.route("/api/messages", methods=["POST"])
 def handle_message():
