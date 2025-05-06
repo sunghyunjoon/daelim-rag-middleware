@@ -3,10 +3,8 @@ import requests
 
 app = Flask(__name__)
 
-# 설정값
-AGENT_ID = "asst_UCRnBi1k1NHN9gL9oUxfi8X"
-API_URL = f"https://westus.api.azureml.ms/agents/asst_UCRnBi1k1NHN9gL9oUxfi8X/chat"
-API_KEY = "7UG4Kmizh8aWGzPfrI4cJLt40U9kpo8oHXg6FVQeICA0Kw3Z2ppPJQQJ99BEAC4f1cMXJ3w3AAABACOGdZoM" 
+API_URL = "https://daelim-chat-openai-westus.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2025-01-01-preview"
+API_KEY = "7UG4Kmizh8aWGzPfrI4cJLt40U9kpo8oHXg6FVQeICA0Kw3Z2ppPJQQJ99BEAC4f1cMXJ3w3AAABACOGdZoM"
 
 @app.route("/api/messages", methods=["POST"])
 def handle_message():
@@ -14,14 +12,21 @@ def handle_message():
     user_input = data.get("text", "안녕하세요")
 
     headers = {
-        "Authorization": f"Bearer {API_KEY}",
+        "api-key": API_KEY,
         "Content-Type": "application/json"
     }
 
-    payload = {"input": user_input}
+    payload = {
+        "messages": [
+            {"role": "user", "content": user_input}
+        ],
+        "max_tokens": 1000,
+        "temperature": 1.0
+    }
+
     response = requests.post(API_URL, headers=headers, json=payload)
     result = response.json()
-    answer = result.get("result", "죄송합니다. 다시 말씀해 주세요.")
+    answer = result['choices'][0]['message']['content']
 
     return jsonify({
         "type": "message",
